@@ -1,0 +1,1 @@
+cmd_/home/km/MIRAFRA/basic_driver/basic_driver.ko := ld -r -m elf_x86_64  -z max-page-size=0x200000 -z noexecstack   --build-id  -T ./scripts/module-common.lds -o /home/km/MIRAFRA/basic_driver/basic_driver.ko /home/km/MIRAFRA/basic_driver/basic_driver.o /home/km/MIRAFRA/basic_driver/basic_driver.mod.o;  true
