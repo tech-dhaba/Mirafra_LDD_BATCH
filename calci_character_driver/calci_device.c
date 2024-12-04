@@ -19,4 +19,5 @@ int main(int argc,char *argv[])
 	printf("%s",buff);
 	write(fd,buff,strlen(buff));
 	return 0;
+	
 }
