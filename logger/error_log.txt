@@ -1,0 +1,10 @@
+[Nov 27 2024 16:58:28] ERROR: An error occurred in main
+	File: log.c
+	Line: 23
+	Function: main
+
+[Nov 27 2024 16:58:28] ERROR: An error occurred in some_function
+	File: log.c
+	Line: 19
+	Function: some_function
+
