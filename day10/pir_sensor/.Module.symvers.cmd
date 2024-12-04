@@ -1,1 +1,0 @@
-savedcmd_/home/prince/linux_dd/day10/pir_sensor/Module.symvers :=  scripts/mod/modpost -M -m -a      -o /home/prince/linux_dd/day10/pir_sensor/Module.symvers -T /home/prince/linux_dd/day10/pir_sensor/modules.order -i Module.symvers -e 

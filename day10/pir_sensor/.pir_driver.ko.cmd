@@ -1,1 +1,0 @@
-savedcmd_/home/prince/linux_dd/day10/pir_sensor/pir_driver.ko := ld -r -m elf_x86_64 -z noexecstack --no-warn-rwx-segments --build-id=sha1  -T scripts/module.lds -o /home/prince/linux_dd/day10/pir_sensor/pir_driver.ko /home/prince/linux_dd/day10/pir_sensor/pir_driver.o /home/prince/linux_dd/day10/pir_sensor/pir_driver.mod.o
