@@ -35,14 +35,12 @@ static void enque(void)
 	}
 	else if(((rear+1)%N)==front)
 	{
-		//printf("Que is full\n");
 		printk(KERN_INFO "que is full\n");
 		return;
 	}
 	else
 	{
 		rear=(rear+1)%N;
-		//que[rear]=x;
 		strcpy(Q[rear].msg,message);
 		printk(KERN_INFO "message inserted=%s\n",Q[rear].msg);
 		//strncpy(Q[rear].msg,message,sizeof(Q[rear].msg)-1);
@@ -55,7 +53,6 @@ static int deque(void)
 
 	if(front==-1 && rear==-1)
 	{
-		//printf("Que is empty\n");
 		printk(KERN_INFO "que is empty\n");
 		return 0;
 	}
@@ -65,7 +62,6 @@ static int deque(void)
 	}
 	else
 	{
-		//printf("the dequed element=%d\n",que[front]);
 		printk(KERN_INFO "The dequed element is = %s\n",Q[front].msg);	
 		strcpy(device_buffer,Q[front].msg);
 		//strncpy(Q[front].msg,message,sizeof(Q[front].msg)-1);
@@ -82,16 +78,13 @@ static void display(void)
 	int i = front;
 	if(front==-1 && rear == -1)
 	{
-		//printf("que is empty\n");
 		printk(KERN_INFO "que is empty\n");
 	}
 	else
 	{
-		//printf("Que is:\n")
 		printk(KERN_INFO "que is = \n");
 		while(i != rear)
 		{
-			//printf("%d",que[i]);
 				printk(KERN_INFO "que = %s ",Q[i].msg);
 				strcpy(device_buffer,Q[i].msg);
 		//strncpy(Q[i].msg,message,sizeof(Q[i].msg)-1);
@@ -142,7 +135,6 @@ static ssize_t device_read(struct file *file, char __user *user_buffer, size_t s
     deque();
      printk(KERN_INFO "main deque device_buffer = %s\n",device_buffer);
      char temp[200];
-     //strncpy(temp,device_buffer,sizeof(temp));//somethings wrong here
      printk(KERN_INFO "main deque temp = %s\n",temp);
     if (copy_to_user(user_buffer,device_buffer, size)) {
 	    return -EFAULT;
@@ -192,5 +184,5 @@ module_init(simple_driver_init);
 module_exit(simple_driver_exit);
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Your Name");
+MODULE_AUTHOR("Prince Suresh");
 MODULE_DESCRIPTION("A Simple Linux Device Driver");
