@@ -1,0 +1,1 @@
+savedcmd_/home/tyr/ldd/simple_driver/Module.symvers :=  scripts/mod/modpost -M -m -a      -o /home/tyr/ldd/simple_driver/Module.symvers -T /home/tyr/ldd/simple_driver/modules.order -i Module.symvers -e 
