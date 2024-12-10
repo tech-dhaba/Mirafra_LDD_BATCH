@@ -1,4 +1,5 @@
-#include <linux/module.h>
+#
+nclude <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/fs.h>
 #include <linux/uaccess.h> // For copy_to_user and copy_from_user
@@ -68,10 +69,7 @@ static ssize_t device_write(struct file *file, const char __user *user_buffer, s
         return -EFAULT;
     }
 
-    device_buffer[size] = '\0'; // Null-terminate the string
-	pr_info("Before updating offset....file -> f_pos =%lld , *offset = %lld", file -> f_pos, *offset);
 	*offset += size;
-	pr_info("After updating offset....file -> f_pos =%lld , *offset = %lld", file -> f_pos, *offset);
     printk(KERN_INFO "simple_device: Received %zu bytes from the user\n", sizeof(device_buffer));
 	return size;
 }
