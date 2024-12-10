@@ -1,0 +1,1 @@
+cmd_/home/km/Mirafra_training/Device_Driver/Double/driver_double.mod := { echo  /home/km/Mirafra_training/Device_Driver/Double/driver_double.o;  echo; } > /home/km/Mirafra_training/Device_Driver/Double/driver_double.mod
