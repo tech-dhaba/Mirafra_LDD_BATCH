@@ -1,4 +1,4 @@
-obj-m += gpio.o
+obj-m += gpio.o gpio_interrupt_led.o
 
 all:
 	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules

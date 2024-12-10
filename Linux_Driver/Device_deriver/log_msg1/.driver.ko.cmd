@@ -1,1 +1,0 @@
-cmd_/home/km/Mirafra_training/Device_Driver/log_msg1/driver.ko := ld -r -m elf_x86_64  -z max-page-size=0x200000 -z noexecstack   --build-id  -T ./scripts/module-common.lds -o /home/km/Mirafra_training/Device_Driver/log_msg1/driver.ko /home/km/Mirafra_training/Device_Driver/log_msg1/driver.o /home/km/Mirafra_training/Device_Driver/log_msg1/driver.mod.o;  true
