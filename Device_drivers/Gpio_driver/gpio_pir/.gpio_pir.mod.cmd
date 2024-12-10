@@ -1,0 +1,1 @@
+cmd_/home/km/balasai_mirafra/Gpio_driver/gpio_pir/gpio_pir.mod := { echo  /home/km/balasai_mirafra/Gpio_driver/gpio_pir/gpio_pir.o;  echo; } > /home/km/balasai_mirafra/Gpio_driver/gpio_pir/gpio_pir.mod

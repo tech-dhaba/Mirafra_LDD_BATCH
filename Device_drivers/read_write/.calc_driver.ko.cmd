@@ -1,0 +1,1 @@
+cmd_/home/km/balasai_LDD/read_write/calc_driver.ko := ld -r -m elf_x86_64  -z max-page-size=0x200000 -z noexecstack   --build-id  -T ./scripts/module-common.lds -o /home/km/balasai_LDD/read_write/calc_driver.ko /home/km/balasai_LDD/read_write/calc_driver.o /home/km/balasai_LDD/read_write/calc_driver.mod.o;  true

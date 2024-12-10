@@ -1,0 +1,1 @@
+cmd_/home/km/balasai_mirafra/Gpio_driver/gpio_pir/gpio_pir.ko := ld -r -m elf_x86_64  -z max-page-size=0x200000 -z noexecstack   --build-id  -T ./scripts/module-common.lds -o /home/km/balasai_mirafra/Gpio_driver/gpio_pir/gpio_pir.ko /home/km/balasai_mirafra/Gpio_driver/gpio_pir/gpio_pir.o /home/km/balasai_mirafra/Gpio_driver/gpio_pir/gpio_pir.mod.o;  true
