@@ -1,0 +1,1 @@
+cmd_/home/mirafra/workspace_copy/workspace/practice/drivers/Keyboard_intr_driver/Module.symvers := sed 's/\.ko$$/\.o/' /home/mirafra/workspace_copy/workspace/practice/drivers/Keyboard_intr_driver/modules.order | scripts/mod/modpost -m -a  -o /home/mirafra/workspace_copy/workspace/practice/drivers/Keyboard_intr_driver/Module.symvers -e -i Module.symvers   -T -
