@@ -61,10 +61,10 @@ irqreturn_t simulated_interrupt_handler(int irq, void *dev_id) {
 
     // Simulate filling buffers with status and data
     spin_lock_irqsave(&buffer_lock, flags);
-    strncpy(status_buffer, "Device Status: OK", MAX_BUFFER_SIZE);
+    strncpy(status_buffer, "recived the information: OK", MAX_BUFFER_SIZE);
     status_len = strlen(status_buffer);
 
-    strncpy(data_buffer, "Packet Data: Hello, World!", MAX_BUFFER_SIZE);
+    strncpy(data_buffer, "yaswanth kumar reddy: Hello, World!", MAX_BUFFER_SIZE);
     data_len = strlen(data_buffer);
     spin_unlock_irqrestore(&buffer_lock, flags);
 
