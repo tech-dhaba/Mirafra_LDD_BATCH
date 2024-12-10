@@ -1,0 +1,1 @@
+cmd_/home/km/ldd/ldd/2kernel_buffer/kernel_buffer.ko := ld -r -m elf_x86_64 -z max-page-size=0x200000 -T ./scripts/module-common.lds --build-id  -o /home/km/ldd/ldd/2kernel_buffer/kernel_buffer.ko /home/km/ldd/ldd/2kernel_buffer/kernel_buffer.o /home/km/ldd/ldd/2kernel_buffer/kernel_buffer.mod.o ;  true
