@@ -1,0 +1,3 @@
+[submodule "LDDTraining"]
+	path = LDDTraining
+	url = git@github.com:Dinesh3702/LDDTraining.git
