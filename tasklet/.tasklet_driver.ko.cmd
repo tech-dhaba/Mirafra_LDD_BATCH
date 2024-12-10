@@ -1,1 +1,0 @@
-cmd_/home/km/practice/tasklet/tasklet_driver.ko := ld -r -m elf_x86_64  -z max-page-size=0x200000 -z noexecstack   --build-id  -T ./scripts/module-common.lds -o /home/km/practice/tasklet/tasklet_driver.ko /home/km/practice/tasklet/tasklet_driver.o /home/km/practice/tasklet/tasklet_driver.mod.o;  true
