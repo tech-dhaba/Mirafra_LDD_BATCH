@@ -1,0 +1,3 @@
+[submodule "akash-LDD_TRAINING"]
+	path = akash-LDD_TRAINING
+	url = git@github.com:akashc-sudo/akash-LDD_TRAINING.git
