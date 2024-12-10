@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Name of the module (replace gpio_driver with your source file's name without the .c extension)
 obj-m := gpio_driver1.o
 
@@ -29,3 +30,11 @@ help:
 	@echo "  ARCH            - Target architecture (default: arm)"
 	@echo "  CROSS_COMPILE   - Cross-compiler prefix (default: arm-linux-gnueabihf-)"
 	@echo "  KDIR            - Kernel source directory (default: /lib/modules/$(uname -r)/build)"
+=======
+obj-m+= gpio_interrupt.o
+all:
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
+clean:
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
+
+>>>>>>> f907368958ad71acb2d78479ed73e4bdf26ccfb9

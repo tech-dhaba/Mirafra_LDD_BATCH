@@ -3,8 +3,3 @@ all:
 	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
 clean:
 	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
-<<<<<<< HEAD
-
-
-=======
->>>>>>> f907368958ad71acb2d78479ed73e4bdf26ccfb9
