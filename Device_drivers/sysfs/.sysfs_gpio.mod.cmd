@@ -1,0 +1,1 @@
+cmd_/home/km/Mirafra_LDD_BATCH/Device_drivers/sysfs/sysfs_gpio.mod := { echo  /home/km/Mirafra_LDD_BATCH/Device_drivers/sysfs/sysfs_gpio.o;  echo; } > /home/km/Mirafra_LDD_BATCH/Device_drivers/sysfs/sysfs_gpio.mod
