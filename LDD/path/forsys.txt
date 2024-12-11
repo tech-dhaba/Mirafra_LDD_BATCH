@@ -1,0 +1,6 @@
+# Write to the sysfs attribute
+echo "Hello, Kernel!" > /sys/kernel/sysfs_example/string
+
+# Read from the sysfs attribute
+cat /sys/kernel/sysfs_example/string
+:
