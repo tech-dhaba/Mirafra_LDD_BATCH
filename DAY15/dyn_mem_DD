@@ -1,0 +1,25 @@
++ kmalloc
+syntax: void *kmalloc(size_t size, gfp_t flags);
+returns:
+sucess->It returns pointer pointed to allocated memory, need to typecast the memory type.
+Failure-> - ENOMEM
+
+
+kmalloc uses get_free_page to get the memory.
+The way in which the pages are collected depends on the second parameter
+ ( GFP_ATOMIC GFP_KERNEL ... in which GFP means GET FREE PAGE).
+The advantage of kmalloc on the GFP is that it can fit multiple allocations 
+into a single page.
+
+GFP_USER - Allocate memory on behalf of user. May sleep.
+GFP_KERNEL - Allocate normal kernel ram. May sleep.
+GFP_ATOMIC - Allocation will not sleep. May use emergency pools. For example, use this inside interrupt handlers.
+GFP_HIGHUSER - Allocate pages from high memory.
+GFP_NOIO - Do not do any I/O at all while trying to get memory.
+GFP_NOFS - Do not make any fs calls while trying to get memory.
+GFP_NOWAIT - Allocation will not sleep.
+GFP_THISNODE - Allocate node-local memory only.
+GFP_DMA - Allocation suitable for DMA. Should only be used for kmalloc caches.
+          Otherwise, use a slab created with SLAB_DMA.
+
+
