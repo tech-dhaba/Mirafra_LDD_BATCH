@@ -1,0 +1,16 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+    compatible = "brcm,bcm2835";
+    fragment@0 {
+        target = <&gpio>;
+        __overlay__ {
+            gpio16 {
+                brcm,pins = <16>;
+                brcm,function = <0>;  // GPIO function
+                brcm,pull = <0>;      // No pull-up or pull-down
+            };
+        };
+    };
+};

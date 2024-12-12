@@ -5,7 +5,7 @@
 #include <linux/mutex.h>
 #include <linux/time.h>
 #include <linux/slab.h>
-
+/* device name defining */
 #define DEVICE_NAME "logger_driver"
 #define BUFFER_SIZE 5
 #define LOG_MSG_SIZE 256
@@ -17,13 +17,13 @@ static int tail = 0;
 static int count = 0;
 static struct mutex log_lock;
 
-// Prototypes
+/* function  Prototypes declared */
 static int device_open(struct inode *, struct file *);
 static int device_release(struct inode *, struct file *);
 static ssize_t device_write(struct file *, const char __user *, size_t, loff_t *);
 static ssize_t device_read(struct file *, char __user *, size_t, loff_t *);
 
-// File operations structure
+/*  File operations structure that points to function to perforn the operations */
 static struct file_operations fops = {
     .open = device_open,
     .release = device_release,
@@ -31,19 +31,19 @@ static struct file_operations fops = {
     .read = device_read,
 };
 
-// Open device
+/* the function for  Open device */
 static int device_open(struct inode *inodep, struct file *filep) {
     printk(KERN_INFO "logger_driver: Device opened\n");
     return 0;
 }
 
-// Close device
+/* THE FUNCTION for  Close device */
 static int device_release(struct inode *inodep, struct file *filep) {
     printk(KERN_INFO "logger_driver: Device closed\n");
     return 0;
 }
 
-// Write log to the circular buffer
+/* Write log to the circular buffer   */
 static ssize_t device_write(struct file *filep, const char __user *user_buffer, size_t len, loff_t *offset) {
     char temp_buffer[LOG_MSG_SIZE];
     struct timespec64 ts;
@@ -59,11 +59,11 @@ static ssize_t device_write(struct file *filep, const char __user *user_buffer, 
     }
     temp_buffer[len] = '\0';
 
-    // Get the current time
+    /*  Get the current time  */
     ktime_get_real_ts64(&ts);
     snprintf(timestamp, sizeof(timestamp), "[%lld.%06ld] ", ts.tv_sec, ts.tv_nsec / 1000);
 
-    // Write log with timestamp
+    /* Write log with timestamp  */
     mutex_lock(&log_lock);
     snprintf(logs[head], LOG_MSG_SIZE, "%s%s", timestamp, temp_buffer);
     head = (head + 1) % BUFFER_SIZE;
@@ -78,7 +78,7 @@ static ssize_t device_write(struct file *filep, const char __user *user_buffer, 
     return len;
 }
 
-// Read logs from the circular buffer
+/*  Read logs from the circular buffer   */
 static ssize_t device_read(struct file *filep, char __user *user_buffer, size_t len, loff_t *offset) {
     int log_len;
 
@@ -110,7 +110,7 @@ static ssize_t device_read(struct file *filep, char __user *user_buffer, size_t 
     return log_len;
 }
 
-// Initialize the module
+/*  Initialize the module   */
 static int __init logger_driver_init(void) {
     major_number = register_chrdev(0, DEVICE_NAME, &fops);
     if (major_number < 0) {
@@ -124,7 +124,7 @@ static int __init logger_driver_init(void) {
     return 0;
 }
 
-// Exit the module
+/*  Exit the module   */
 static void __exit logger_driver_exit(void) {
     unregister_chrdev(major_number, DEVICE_NAME);
     mutex_destroy(&log_lock);
@@ -135,6 +135,6 @@ module_init(logger_driver_init);
 module_exit(logger_driver_exit);
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Your Name");
+MODULE_AUTHOR("Yaswanth reddy");
 MODULE_DESCRIPTION("Logger Device Driver with Circular Buffer");
 

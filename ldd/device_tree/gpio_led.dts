@@ -2,12 +2,21 @@
 /plugin/;
 
 / {
-    compatible = "brcm,bcm2835";
-
     fragment@0 {
         target = <&gpio>;
-        _overlay_ {
-            led_gpio = <&gpio 17 0>;  // GPIO 17 is used for the LED
+        __overlay__ {
+            gpio_out {
+                compatible = "gpio-leds";
+                #address-cells = <1>;
+                #size-cells = <0>;
+
+                led@17 {
+                    label = "led";
+                    reg = <17>;  /* GPIO pin 17 */
+                    gpios = <&gpio 17 0>;  /* GPIO controller and pin */
+                };
+            };
         };
     };
 };
+
