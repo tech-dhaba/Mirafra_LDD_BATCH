@@ -1,0 +1,1 @@
+savedcmd_/home/vajid/Techdhaba/DAY14/gpio_led_switch.mod := printf '%s\n'   gpio_led_switch.o | awk '!x[$$0]++ { print("/home/vajid/Techdhaba/DAY14/"$$0) }' > /home/vajid/Techdhaba/DAY14/gpio_led_switch.mod

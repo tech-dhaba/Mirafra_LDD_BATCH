@@ -1,0 +1,1 @@
+savedcmd_/home/vajid/Techdhaba/DAY14/Module.symvers :=  scripts/mod/modpost -M -m -a      -o /home/vajid/Techdhaba/DAY14/Module.symvers -T /home/vajid/Techdhaba/DAY14/modules.order -i Module.symvers -e 
