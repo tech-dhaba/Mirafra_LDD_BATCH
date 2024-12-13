@@ -70,5 +70,5 @@ module_init(debugfs_example_init);
 module_exit(debugfs_example_exit);
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Prashant");
+MODULE_AUTHOR("KGCSR");
 MODULE_DESCRIPTION("A simple debugfs example");
