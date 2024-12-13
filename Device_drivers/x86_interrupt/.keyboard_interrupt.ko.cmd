@@ -1,0 +1,1 @@
+cmd_/home/km/balasai_mirafra/interrupt/keyboard_interrupt.ko := ld -r -m elf_x86_64  -z max-page-size=0x200000 -z noexecstack   --build-id  -T ./scripts/module-common.lds -o /home/km/balasai_mirafra/interrupt/keyboard_interrupt.ko /home/km/balasai_mirafra/interrupt/keyboard_interrupt.o /home/km/balasai_mirafra/interrupt/keyboard_interrupt.mod.o;  true
