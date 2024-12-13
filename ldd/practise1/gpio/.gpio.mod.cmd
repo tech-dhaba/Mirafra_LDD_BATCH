@@ -1,0 +1,1 @@
+cmd_/home/km/mirafra/Mirafra_LDD_BATCH/ldd/practise1/gpio/gpio.mod := { echo  /home/km/mirafra/Mirafra_LDD_BATCH/ldd/practise1/gpio/gpio.o;  echo; } > /home/km/mirafra/Mirafra_LDD_BATCH/ldd/practise1/gpio/gpio.mod
