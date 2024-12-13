@@ -13,7 +13,7 @@ MODULE_AUTHOR("Yaswanth reddy");
 MODULE_DESCRIPTION("Sysfs example for controlling GPIO");
 MODULE_VERSION("1.0");
 
-#define LED_GPIO 17  // GPIO pin for the LED
+#define LED_GPIO 17  /*  GPIO pin for the LED */
 
 /*  Sysfs attributes  */
 static struct kobject *example_kobject;
