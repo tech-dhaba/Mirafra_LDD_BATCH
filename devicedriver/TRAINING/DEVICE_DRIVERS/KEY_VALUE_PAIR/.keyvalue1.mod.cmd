@@ -1,1 +1,0 @@
-cmd_/home/km/Mirafra_LDD_BATCH/devicedriver/TRAINING/DEVICE_DRIVERS/KEY_VALUE_PAIR/keyvalue1.mod := { echo  /home/km/Mirafra_LDD_BATCH/devicedriver/TRAINING/DEVICE_DRIVERS/KEY_VALUE_PAIR/keyvalue1.o;  echo; } > /home/km/Mirafra_LDD_BATCH/devicedriver/TRAINING/DEVICE_DRIVERS/KEY_VALUE_PAIR/keyvalue1.mod
