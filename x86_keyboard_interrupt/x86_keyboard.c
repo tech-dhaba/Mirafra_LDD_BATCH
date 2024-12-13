@@ -44,5 +44,5 @@ module_exit(techdhaba_keyboard_interrupt_exit);
 
 // Module metadata
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("techdhaba");
+MODULE_AUTHOR("KGCSR");
 MODULE_DESCRIPTION("TechDhaba Keyboard Interrupt Driver");

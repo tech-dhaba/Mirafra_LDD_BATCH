@@ -4,7 +4,7 @@
 #include <linux/uaccess.h> // For copy_to_user and copy_from_user
 #include <linux/string.h>
 
-#define DEVICE_NAME "simple_device"
+#define DEVICE_NAME "simple_calculator_device"
 #define BUFFER_SIZE 1024
 
 static int major_number;
@@ -128,5 +128,5 @@ module_init(simple_driver_init);
 module_exit(simple_driver_exit);
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Your Name");
+MODULE_AUTHOR("KGCSR");
 MODULE_DESCRIPTION("A Simple Linux Device Driver");

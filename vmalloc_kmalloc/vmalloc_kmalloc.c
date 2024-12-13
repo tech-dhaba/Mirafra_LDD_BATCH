@@ -61,5 +61,5 @@ module_init(memory_alloc_init);
 module_exit(memory_alloc_exit);
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Your Name");
+MODULE_AUTHOR("KGCSR");
 MODULE_DESCRIPTION("A simple example module using kmalloc and vmalloc.");

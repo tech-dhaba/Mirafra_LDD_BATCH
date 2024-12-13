@@ -1,5 +1,4 @@
-#
-nclude <linux/module.h>
+#include <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/fs.h>
 #include <linux/uaccess.h> // For copy_to_user and copy_from_user
@@ -123,5 +122,5 @@ module_init(simple_driver_init);
 module_exit(simple_driver_exit);
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Your Name");
+MODULE_AUTHOR("KGCSR");
 MODULE_DESCRIPTION("A Simple Linux Device Driver");

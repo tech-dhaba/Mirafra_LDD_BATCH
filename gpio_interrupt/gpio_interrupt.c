@@ -1,11 +1,3 @@
-/* 
- *  \file       gpio_interrupt.c
- *
- *  \details    Basic GPIO interrupt driver for Raspberry Pi 4
- *
- *  \author     TechDhaba
- *
- *******************************************************************************/
 #include <linux/kernel.h>
 #include <linux/init.h>
 #include <linux/module.h>
@@ -152,6 +144,6 @@ module_init(gpio_driver_init);
 module_exit(gpio_driver_exit);
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("TechDhaba <info@techdhaba.com>");
+MODULE_AUTHOR("KGCSR");
 MODULE_DESCRIPTION("Basic GPIO Interrupt Driver for Raspberry Pi 4");
 MODULE_VERSION("1.0");

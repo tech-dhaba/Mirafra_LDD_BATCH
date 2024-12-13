@@ -6,7 +6,7 @@
 #include <linux/slab.h>
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("techdhaba");
+MODULE_AUTHOR("KGCSR");
 MODULE_DESCRIPTION("Example Linux Device Driver Using Workqueue");
 
 /* Define a custom structure for passing data to the workqueue */
