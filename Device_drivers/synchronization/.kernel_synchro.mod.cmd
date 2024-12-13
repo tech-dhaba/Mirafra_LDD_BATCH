@@ -1,0 +1,1 @@
+cmd_/home/km/Mirafra_LDD_BATCH/Device_drivers/synchronization/kernel_synchro.mod := { echo  /home/km/Mirafra_LDD_BATCH/Device_drivers/synchronization/kernel_synchro.o;  echo; } > /home/km/Mirafra_LDD_BATCH/Device_drivers/synchronization/kernel_synchro.mod
