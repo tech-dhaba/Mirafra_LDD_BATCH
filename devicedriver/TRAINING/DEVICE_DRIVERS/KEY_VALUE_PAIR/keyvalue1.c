@@ -4,7 +4,7 @@
 #include <linux/uaccess.h> // For copy_to_user and copy_from_user
 
 #define DEVICE_NAME "keyvalue"
-#define MAX_SIZE 3
+#define MAX_SIZE 10
 #define MAX_LEN 50
 
 struct kv_pair {
