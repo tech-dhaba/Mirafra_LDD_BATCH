@@ -1,0 +1,1 @@
+cmd_/home/km/Mirafra_LDD_BATCH/Device_drivers/DMA/kmalloc_vmalloc.mod := { echo  /home/km/Mirafra_LDD_BATCH/Device_drivers/DMA/kmalloc_vmalloc.o;  echo; } > /home/km/Mirafra_LDD_BATCH/Device_drivers/DMA/kmalloc_vmalloc.mod
