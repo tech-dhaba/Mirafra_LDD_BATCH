@@ -20,6 +20,7 @@
 #include <linux/uaccess.h>
 #include <linux/fs.h>
 #include <linux/device.h>
+#include<linux/delay.h>
 
 #define DEVICE_NAME "sync_driver"
 #define CLASS_NAME "sync"
