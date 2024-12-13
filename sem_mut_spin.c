@@ -13,7 +13,7 @@
 #define CLASS_NAME "sync"
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("TEAM1");
+MODULE_AUTHOR("AVINASH");
 MODULE_DESCRIPTION("Linux Device Driver with kernel thread, mutex, semaphore, and spinlock");
 
 static int major;
