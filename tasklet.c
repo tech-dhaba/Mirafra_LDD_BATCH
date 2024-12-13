@@ -7,7 +7,7 @@
 #include <linux/ioctl.h>
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("TEAM1");
+MODULE_AUTHOR("AVINASH");
 MODULE_DESCRIPTION("Tasklet Example Driver");
 
 #define DEVICE_NAME "tasklet_dev"
