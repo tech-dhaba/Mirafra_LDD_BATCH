@@ -1,0 +1,23 @@
+ln -s soft_file soft_link //to create soft link
+
+ls -lrta
+total 8
+drwxrwxr-x 21 mirafra mirafra 4096 Dec 12 12:19 ..
+-rw-rw-r--  1 mirafra mirafra    0 Dec 12 12:20 soft_file
+-rw-rw-r--  1 mirafra mirafra    0 Dec 12 12:20 hard_file
+lrwxrwxrwx  1 mirafra mirafra    9 Dec 12 12:20 soft_link -> soft_file
+drwxrwxr-x  2 mirafra mirafra 4096 Dec 12 12:20 .
+
+ln hard_file hard_link //to create hard link
+
+ls -lrta
+total 8
+drwxrwxr-x 21 mirafra mirafra 4096 Dec 12 12:19 ..
+-rw-rw-r--  1 mirafra mirafra    0 Dec 12 12:20 soft_file
+-rw-rw-r--  2 mirafra mirafra    0 Dec 12 12:20 hard_link
+-rw-rw-r--  2 mirafra mirafra    0 Dec 12 12:20 hard_file
+lrwxrwxrwx  1 mirafra mirafra    9 Dec 12 12:20 soft_link -> soft_file
+drwxrwxr-x  2 mirafra mirafra 4096 Dec 12 12:21 .
+
+ls -i
+15342185 hard_file  15342185 hard_link  15342184 soft_file  15342186 soft_link
