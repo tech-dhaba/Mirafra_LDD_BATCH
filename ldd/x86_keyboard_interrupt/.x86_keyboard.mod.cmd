@@ -1,0 +1,1 @@
+cmd_/home/km/mirafra/Mirafra_LDD_BATCH/ldd/x86_keyboard_interrupt/x86_keyboard.mod := { echo  /home/km/mirafra/Mirafra_LDD_BATCH/ldd/x86_keyboard_interrupt/x86_keyboard.o;  echo; } > /home/km/mirafra/Mirafra_LDD_BATCH/ldd/x86_keyboard_interrupt/x86_keyboard.mod
