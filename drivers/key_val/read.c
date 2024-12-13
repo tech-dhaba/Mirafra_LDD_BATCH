@@ -8,7 +8,7 @@
 
 int main()
 {
-	int fd=open("/dev/key",O_RDWR);
+	int fd=open("/dev/suji",O_RDWR);
 	if(fd==-1)
 		printf("read failed\n");
 	int n;
