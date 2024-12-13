@@ -94,6 +94,6 @@ module_init(gpio_interrupt_init);
 module_exit(gpio_interrupt_exit);
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("AVINASH");
+MODULE_AUTHOR("Pramod");
 MODULE_DESCRIPTION("A simple GPIO interrupt driver for Raspberry Pi");
 MODULE_VERSION("1.0");
