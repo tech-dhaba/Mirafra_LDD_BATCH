@@ -1,0 +1,58 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+    compatible = "brcm,bcm2835";
+
+    fragment@0 {
+        target-path = "/";
+        __overlay__ {
+            lcd_gpio: lcd_gpio {
+                compatible = "gpio-leds";
+                pinctrl-names = "default";
+                pinctrl-0 = <&lcd_pins>;
+
+                lcd_rs {
+                    label = "lcd_rs";
+                    gpios = <&gpio 17 0>;
+                };
+
+                lcd_en {
+                    label = "lcd_en";
+                    gpios = <&gpio 18 0>;
+                };
+
+                lcd_d4 {
+                    label = "lcd_d4";
+                    gpios = <&gpio 22 0>;
+                };
+
+                lcd_d5 {
+                    label = "lcd_d5";
+                    gpios = <&gpio 23 0>;
+                };
+
+                lcd_d6 {
+                    label = "lcd_d6";
+                    gpios = <&gpio 24 0>;
+                };
+
+                lcd_d7 {
+                    label = "lcd_d7";
+                    gpios = <&gpio 25 0>;
+                };
+            };
+        };
+    };
+
+    fragment@1 {
+        target = <&gpio>;
+        __overlay__ {
+            lcd_pins: lcd_pins {
+                brcm,pins = <17 18 22 23 24 25>;
+                brcm,function = <0>; // GPIO function
+            };
+        };
+    };
+};
+

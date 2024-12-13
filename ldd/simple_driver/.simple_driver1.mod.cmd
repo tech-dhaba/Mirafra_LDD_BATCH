@@ -1,1 +1,0 @@
-savedcmd_/home/tyr/ldd/simple_driver/simple_driver1.mod := printf '%s\n'   simple_driver1.o | awk '!x[$$0]++ { print("/home/tyr/ldd/simple_driver/"$$0) }' > /home/tyr/ldd/simple_driver/simple_driver1.mod
