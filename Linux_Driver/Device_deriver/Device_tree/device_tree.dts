@@ -1,0 +1,15 @@
+/dts-v1/;   //version of kernel
+/plugin/;   //hard plugging
+
+/{
+    compatible = "brcm,bcm2835";   //device name.// Raspberry Pi 4 Model B
+
+    fragment@0 {    				
+        target = <&gpio>;			//here target is gpio
+        _overlay_ {					
+            gpio_led: gpio_led {
+                gpios = <&gpio 27 0>; // GPIO 17 is used for the LED
+            };
+        };
+    };
+};
