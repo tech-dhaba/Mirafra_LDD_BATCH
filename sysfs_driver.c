@@ -9,7 +9,7 @@
 #include <linux/slab.h>
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("TechDhaba");
+MODULE_AUTHOR("AVINASH");
 MODULE_DESCRIPTION("Sysfs example for controlling GPIO");
 MODULE_VERSION("1.0");
 

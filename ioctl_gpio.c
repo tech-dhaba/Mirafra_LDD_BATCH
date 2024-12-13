@@ -145,6 +145,6 @@ module_init(gpio_driver_init);
 module_exit(gpio_driver_exit);
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("TechDhaba <info@techdhaba.com>");
+MODULE_AUTHOR("AVINASH");
 MODULE_DESCRIPTION("GPIO driver using ioctl interface for Raspberry Pi");
 MODULE_VERSION("1.0");
