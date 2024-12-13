@@ -1,0 +1,1 @@
+cmd_/home/km/Mirafra_LDD_BATCH/Linux_Driver/Device_deriver/debug_fs/debugfs.mod := { echo  /home/km/Mirafra_LDD_BATCH/Linux_Driver/Device_deriver/debug_fs/debugfs.o;  echo; } > /home/km/Mirafra_LDD_BATCH/Linux_Driver/Device_deriver/debug_fs/debugfs.mod
