@@ -74,7 +74,7 @@ int main() {
 		return 1;
 	}
 	buff[bytes_read] = '\0'; // Null-terminate the string
-	printf("%d",bytes_read);
+	//printf("%d",bytes_read);
 	printf("%s\n", buff);
 
 	//buff[bytes_read] = '\0'; // Null-terminate the string
