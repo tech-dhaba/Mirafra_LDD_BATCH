@@ -1,0 +1,1 @@
+savedcmd_/home/meghana/Mirafra_LDD_BATCH/LDD/log/log.mod := printf '%s\n'   log.o | awk '!x[$$0]++ { print("/home/meghana/Mirafra_LDD_BATCH/LDD/log/"$$0) }' > /home/meghana/Mirafra_LDD_BATCH/LDD/log/log.mod
