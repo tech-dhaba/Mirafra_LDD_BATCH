@@ -1,0 +1,5 @@
+//value receiving time 
+
+*** stack smashing detected ***: <unknown> terminated
+Aborted (core dumped)
+

@@ -59,7 +59,7 @@ int main()
 		return 0;
 	}
 	char buff1[128];
-	printf("receive value:");
+	printf("receive value:\n");
 	fd2=read(fd,buff1,sizeof(buff1)-1);
 	if(fd2<0)
 	{
@@ -67,5 +67,8 @@ int main()
 		return 1;
 	}
 	buff1[fd2]='\0';
-	printf("%s",buff1);
+	printf("%s\n",buff1);
+	close(fd);
+	return 0;
+
 }
