@@ -1,0 +1,1 @@
+cmd_/home/km/mirafra/Mirafra_LDD_BATCH/ldd/practise1/basic_driver.c/basic.mod := { echo  /home/km/mirafra/Mirafra_LDD_BATCH/ldd/practise1/basic_driver.c/basic.o;  echo; } > /home/km/mirafra/Mirafra_LDD_BATCH/ldd/practise1/basic_driver.c/basic.mod
