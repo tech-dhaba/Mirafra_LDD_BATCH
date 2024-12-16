@@ -1,3 +1,4 @@
+
 #include <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/fs.h>
@@ -5,16 +6,16 @@
 
 #define DEVICE_NAME "simple_device"
 #define MAX_ENTRIES 5
-#define BUFFER_SIZE 1056 //definig the buffer size for the device
+#define BUFFER_SIZE 256 //definig the buffer size for the device
 struct logs {
-    int key;
-    char value[50];
+   // int key;
+    char value[BUFFER_SIZE];
 };
-
-// Circular buffer
+static int write_index = 0;
+#define MAX_LOGS 5
+// Circular bufferi
+static char device_buffer[BUFFER_SIZE];
 static struct logs kv[MAX_ENTRIES];
-static int head = 0;  // Points to the next write position
-static int tail = 0;  // Points to the next read position
 static int count = 0; // Number of valid entries in the buffer
 static int open_count = 0; // Device open counter
 static int major_number;
@@ -53,7 +54,7 @@ static ssize_t device_read(struct file *file, char __user *user_buffer, size_t s
    for (j=0;j<MAX_ENTRIES;j++)
     {
         if (strlen(kv[j].value) > 0) {
-            len +=snprintf(temp_buffer + len, BUFFER_SIZE - len, "%d %s\n",kv[j].key, kv[j].value);
+            len +=snprintf(temp_buffer + len, BUFFER_SIZE - len, "%s\n", kv[j].value);
         }
     }
 
@@ -74,33 +75,34 @@ static ssize_t device_read(struct file *file, char __user *user_buffer, size_t s
 
 // Called when data is written to the device
 static ssize_t device_write(struct file *file, const char __user *user_buffer, size_t size, loff_t *offset) {
-    struct logs input;
+    if (size > BUFFER_SIZE - 1)  // Limit the size to the buffer capacity
+        size = BUFFER_SIZE - 1;
+           char timestamp[64];
+    struct timespec64 ts;
+    struct tm tm;
 
-    if (size != sizeof(struct logs)) {
-        printk(KERN_ERR "simple_device: Invalid write size\n");
-        return -EINVAL;
-    }
+    ktime_get_real_ts64(&ts);                // Get current real-time
+        time64_to_tm(ts.tv_sec, 0, &tm);         // Convert to broken-down time
+    snprintf(timestamp,sizeof(timestamp), "date:%02d:%02d:%04ld time:%02d:%02d",tm.tm_mday,tm.tm_mon + 1, tm.tm_year + 1900, tm.tm_hour+6, tm.tm_min);
 
-    if (copy_from_user(&input, user_buffer, size)) {
+    // Copy data from user space to the kernel buffer
+    if (copy_from_user(device_buffer, user_buffer, size)) {
         return -EFAULT;
     }
 
-    // Write data into the buffer
-    kv[head] = input;
-    printk(KERN_INFO "simple_device: Received key=%d, value=%s\n", input.key, input.value);
+    // Null-terminate the string
+    device_buffer[size] = '\0';
 
-    head = (head + 1) % MAX_ENTRIES; // Update head index in circular fashion
+    // Store the message in the circular buffer at the current write_index
+    snprintf(kv[write_index].value, sizeof(kv[write_index].value), "%s %s", timestamp,device_buffer);
+    printk(KERN_INFO "simple_device: Received msg='%s'\n", kv[write_index].value);
 
-    if (count == MAX_ENTRIES) {
-        // Overwrite the oldest entry if buffer is full
-        tail = (tail + 1) % MAX_ENTRIES;
-    } else {
-        count++;
-    }
+    // Increment write_index and wrap around using modulo to simulate circular buffer behavior
+    write_index = (write_index + 1) % 5;
 
+    printk(KERN_INFO "simple_device: Received %zu bytes from the user\n", size);
     return size;
 }
-
 // Module initialization
 static int __init simple_driver_init(void) {
     major_number = register_chrdev(0, DEVICE_NAME, &fops);

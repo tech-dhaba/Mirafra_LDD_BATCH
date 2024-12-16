@@ -3,11 +3,11 @@
 #include <unistd.h>
 #include <string.h>
 
-#define DEVICE_PATH "/dev/keyval2"
-
+#define DEVICE_PATH "/dev/keyv"
+#define BUFFER_SIZE 256
 struct kv_pair {
-    int key;
-    char value[50];
+    //int key;
+    char value[BUFFER_SIZE];
 };
 
 int main() {
@@ -23,8 +23,8 @@ int main() {
     }
 
     while (1) {
-        printf("Enter key and value (key value): ");
-        scanf("%d %49s", &kv.key, kv.value);  // Safe input reading (limiting string size)
+        printf("Enter value (value): ");
+        scanf("%255s", kv.value);  // Safe input reading (limiting string size)
 
         ssize_t bytes_written = write(fd, &kv, sizeof(struct kv_pair));
         if (bytes_written < 0) {
@@ -49,5 +49,4 @@ int main() {
     close(fd);
     return 0;
 }
-
 
