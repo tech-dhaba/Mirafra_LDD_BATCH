@@ -22,6 +22,7 @@ struct log_msg
 int i=0,n;
 int main()
 {
+	int x,y;
 	struct log_msg s[5];
 	char k_buffer[1024];
 	int fd=open(DEVICE_PATH,0666);
@@ -32,23 +33,15 @@ int main()
 	}
 	while(1)
 	{
-		printf("enter 1 to write the message:\n");
-		printf("enter 2 to read the message:\n");
-		scanf("%d",&n);
-		switch(n)
-		{
-			case 1 :
+
 				printf("enter the log msg:\n");
 				scanf(" %[^\n]s",s[i].log_message);
-				int x=write(fd,&s[i].log_message,sizeof(struct log_msg));
-				break;
-			case 2:
-				int y=read(fd,k_buffer,sizeof(k_buffer));
+				x=write(fd,&s[i].log_message,sizeof(struct log_msg));
+				y=read(fd,k_buffer,sizeof(k_buffer)-1);
+				printf("the num of bytes to read is %d\n",y);
 				k_buffer[y]='\0';
-				printf("the kernel buffer is :%s\n",k_buffer);
-				break;
-
-			i=(i+1)%sizeof(max_size);
+				printf("the message read from kernel is : %s\n",k_buffer);
+				i=(i+1)%sizeof(max_size);
 	
 	}
 	return 0;

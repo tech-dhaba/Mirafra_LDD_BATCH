@@ -1,4 +1,3 @@
-
 #include <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/fs.h>
@@ -45,6 +44,7 @@ static int device_open(struct inode *inode, struct file *file) {
 // Device close function
 static int device_close(struct inode *inode, struct file *file) {
     printk(KERN_INFO "logger_device: Device closed\n");
+	open_count--;
     return 0;
 }
 
@@ -53,14 +53,17 @@ static ssize_t device_write(struct file *file, const char __user *user_buffer, s
 {
     char user_message[BUFFER_SIZE];
     char timestamped_message[BUFFER_SIZE];
-    char timestamp[64];
+   // char time_buffer[64];
+//	char date_buffer[64];
+	char timestamp[64];
     struct timespec64 ts;
     struct tm tm;
 
     ktime_get_real_ts64(&ts);                // Get current real-time
-    time64_to_tm(ts.tv_sec, 0, &tm);         // Convert to broken-down time
-    snprintf(timestamp,sizeof(timestamp), "date:%02d:%02d:%04ld time:%02d:%02d",tm.tm_mday,tm.tm_mon + 1, tm.tm_year + 1900, tm.tm_hour, tm.tm_min);
-	pr_info("the time stamp is %s:\n",timestamp);
+  	time64_to_tm(ts.tv_sec, 0, &tm);         // Convert to broken-down time
+    snprintf(timestamp,sizeof(timestamp), "date:%02d:%02d:%04ld time:%02d:%02d",tm.tm_mday,tm.tm_mon + 1, tm.tm_year + 1900, tm.tm_hour+6, tm.tm_min);
+	
+	
     // Copy message from user space
     if (copy_from_user(user_message, user_buffer, size)) {
         return -EFAULT;
@@ -70,35 +73,57 @@ static ssize_t device_write(struct file *file, const char __user *user_buffer, s
     snprintf(timestamped_message, sizeof(timestamped_message), "[%s] %s", timestamp, user_message);
     // Store the message in the circular buffer
     snprintf(log_buffer[write_index].log_message, BUFFER_SIZE, "%s", timestamped_message);
-    write_index = (write_index + 1) % MAX_LOGS;
+
+    // If the buffer is full, move the read_index forward to prevent overwriting unread logs
+    if (write_index < MAX_LOGS) {
+        write_index++;
+    } else {
+        write_index = (write_index + 1) % MAX_LOGS;
+    }
     return size;
 }
 
 // Device read function
 static ssize_t device_read(struct file *file, char __user *user_buffer, size_t size, loff_t *offset) {
     size_t log_len;
-	char temp[256];
-    if (read_index == write_index)
+	char temp[1032]={0};
+	int len=0,i;
+	   	
+   /* if (read_index == write_index)
    	{
-    	strcpy(temp,"no log message is to read from the buffer ie the buffer is empty");
-		if (copy_to_user(user_buffer, log_buffer[read_index].log_message, log_len)) 
+    	strcpy(temp,"logger is empty");
+	    if (copy_to_user(user_buffer, temp,sizeof(temp))) 
 		{
         	return -EFAULT;
     	}
-        return 0; // No logs available
+		pr_info("user buffer %s\n",user_buffer);
+		pr_info("no of bytes sent to user is %ld\n",size);
+		return 0;
     }
-	else if(read_index<=MAX_LOGS)
-	{
+	*/
     	// Get the next log from the circular buffer
-	    log_len = strlen(log_buffer[read_index].log_message);
-   		 if (copy_to_user(user_buffer, log_buffer[read_index].log_message, log_len)) 
-		 {
-       		 return -EFAULT;
-    	 }	
-	}
-	read_index = (read_index + 1) % MAX_LOGS;
-	printk(KERN_INFO "logger_device: Log read\n");
-   	return log_len;
+	    //log_len = strlen(log_buffer[read_index].log_message);
+		pr_info("ooooooooo\n");
+		for(i=0;i<MAX_LOGS;i++)
+		{
+			if((strlen(log_buffer[i].log_message))>0)
+		  	len+=snprintf(temp+len, BUFFER_SIZE-len, "%s\n",log_buffer[i].log_message);
+		}
+		if(*offset >=len)
+			return 0;
+		if(size > len - *offset)
+			size = len - *offset;
+
+   		if (copy_to_user(user_buffer,temp + *offset,size)) 
+		{
+       			 return -EFAULT;
+        }
+	   *offset +=size;
+   		pr_info("size = %ld\n",size);
+ 		pr_info("user buffer:%s\n",user_buffer);		
+			//read_index = (read_index + 1) % MAX_LOGS;
+		//	printk(KERN_INFO "read_index: %d\n",read_index);
+   	return size;
 }
 
 // Module initialization
