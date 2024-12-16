@@ -1,29 +1,27 @@
-//basic implementation of a Linux character device driver that can read and write data between user space and kernel space, while also providing simple logging and tracking functionality
+#include <linux/module.h>
+#include <linux/kernel.h>
+#include <linux/fs.h>
+#include <linux/uaccess.h>
 
-#include <linux/module.h>//for module_init and module_exit
-#include <linux/kernel.h>//for printk
-#include <linux/fs.h> //for file operations
-#include <linux/uaccess.h> // For copy_to_user() and copy_from_user()
+#define DEVICE_NAME "simple_device"
+#define BUFFER_SIZE 1056
 
-#define DEVICE_NAME "simple_device" //defining the device name that will appear on /dev
-#define BUFFER_SIZE 1056 //definig the buffer size for the device
+static int major_number;
+static char device_buffer[BUFFER_SIZE];
+static int open_count = 0;
+static int write_index = 0; // Keep track of the current position in the circular buffer
 
-//definig global variables
-static int major_number; //to store major device number
-static char device_buffer[BUFFER_SIZE]; //a buffer to store data for reading/writing
-static int open_count = 0,i=0; //to count the no.of times the device is opened
+// Define a circular buffer to hold messages
+struct logs {
+    char msg[100];
+};
+static struct logs svar[5]; // Buffer size is 5
 
-// Function prototypes for device operations
+// File operation prototypes
 static int device_open(struct inode *inode, struct file *file);
 static int device_close(struct inode *inode, struct file *file);
 static ssize_t device_read(struct file *file, char __user *user_buffer, size_t size, loff_t *offset);
 static ssize_t device_write(struct file *file, const char __user *user_buffer, size_t size, loff_t *offset);
-
-struct logs
-{
-	char msg[100];
-};
-static struct logs svar[5];
 
 // File operations structure
 static struct file_operations fops = {
@@ -33,36 +31,44 @@ static struct file_operations fops = {
     .write = device_write,
 };
 
-// Called when the device is opened
+// Open function
 static int device_open(struct inode *inode, struct file *file) {
-    open_count++;//incrementing the open count each time when device is opened
+    open_count++;
     printk(KERN_INFO "simple_device: Device opened %d time(s)\n", open_count);
     return 0;
 }
 
-// Called when the device is closed
+// Close function
 static int device_close(struct inode *inode, struct file *file) {
     printk(KERN_INFO "simple_device: Device closed\n");
     return 0;
 }
 
-// Called when data is read from the device
+// Read function: Reads all stored messages from the circular buffer
 static ssize_t device_read(struct file *file, char __user *user_buffer, size_t size, loff_t *offset) {
-    int len=0,j=0;
-    char temp_buffer[BUFFER_SIZE]={0}; // temporary buffer to store logs
-    // Concatenate the messages from the circular buffer into the temp_buffer
-    for (j=0;j<5;j++)
-    {
-        if (strlen(svar[j].msg) > 0) {
-            len +=snprintf(temp_buffer + len, BUFFER_SIZE - len, "%s\n", svar[j].msg);
+    int len = 0,i;
+    char temp_buffer[BUFFER_SIZE] = {0};  // Temporary buffer to store logs
+
+    // Concatenate all messages in the buffer
+    for (i = 0; i < 5; i++) {
+        if (strlen(svar[i].msg) > 0) {
+            len += snprintf(temp_buffer + len, sizeof(temp_buffer) - len, "%s\n", svar[i].msg);
         }
     }
-    if (*offset >= len) // Check if all data has been read
+
+    // If there is no data to read, return 0 (EOF)
+    if (len == 0) {
+        return 0;
+    }
+
+    // Adjust size to avoid reading beyond the buffer
+    if (*offset >= len)
         return 0;
 
-    if (size > len - *offset) // Adjust size to avoid reading beyond buffer
+    if (size > len - *offset)
         size = len - *offset;
 
+    // Copy data from temp_buffer to the user buffer
     if (copy_to_user(user_buffer, temp_buffer + *offset, size)) {
         return -EFAULT;
     }
@@ -72,23 +78,31 @@ static ssize_t device_read(struct file *file, char __user *user_buffer, size_t s
     return size;
 }
 
-// Called when data is written to the device
+// Write function: Writes a new message into the circular buffer
 static ssize_t device_write(struct file *file, const char __user *user_buffer, size_t size, loff_t *offset) {
-    if (size > BUFFER_SIZE - 1) // Limit size to buffer capacity
+    if (size > BUFFER_SIZE - 1)  // Limit the size to the buffer capacity
         size = BUFFER_SIZE - 1;
 
+    // Copy data from user space to the kernel buffer
     if (copy_from_user(device_buffer, user_buffer, size)) {
         return -EFAULT;
     }
-    sscanf(device_buffer,"%s",svar[i].msg);
-    printk(KERN_INFO "simple_device: Received msg=%s\n",svar[i].msg);
-    i=(i+1)%5;
-    device_buffer[size] = '\0'; // Null-terminate the string
+
+    // Null-terminate the string
+    device_buffer[size] = '\0';
+
+    // Store the message in the circular buffer at the current write_index
+    snprintf(svar[write_index].msg, sizeof(svar[write_index].msg), "%s", device_buffer);
+    printk(KERN_INFO "simple_device: Received msg='%s'\n", svar[write_index].msg);
+
+    // Increment write_index and wrap around using modulo to simulate circular buffer behavior
+    write_index = (write_index + 1) % 5;
+
     printk(KERN_INFO "simple_device: Received %zu bytes from the user\n", size);
     return size;
 }
 
-// Module initialization
+// Module initialization function
 static int __init simple_driver_init(void) {
     major_number = register_chrdev(0, DEVICE_NAME, &fops);
     if (major_number < 0) {
@@ -99,7 +113,7 @@ static int __init simple_driver_init(void) {
     return 0;
 }
 
-// Module cleanup
+// Module exit function
 static void __exit simple_driver_exit(void) {
     unregister_chrdev(major_number, DEVICE_NAME);
     printk(KERN_INFO "simple_device: Unregistered device\n");
@@ -111,3 +125,4 @@ module_exit(simple_driver_exit);
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Your Name");
 MODULE_DESCRIPTION("A Simple Linux Device Driver");
+
