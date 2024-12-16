@@ -4,3 +4,6 @@
 [submodule "functionpointers"]
 	path = functionpointers
 	url = https://github.com/avinashanuku/functionpointers.git
+[submodule "LDD"]
+	path = LDD
+	url = https://github.com/avinashanuku/LDD.git
