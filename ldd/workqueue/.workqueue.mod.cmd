@@ -1,0 +1,1 @@
+cmd_/home/km/mirafra/Mirafra_LDD_BATCH/ldd/workqueue/workqueue.mod := { echo  /home/km/mirafra/Mirafra_LDD_BATCH/ldd/workqueue/workqueue.o;  echo; } > /home/km/mirafra/Mirafra_LDD_BATCH/ldd/workqueue/workqueue.mod
