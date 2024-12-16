@@ -1,3 +1,4 @@
+
 #include <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/fs.h>
@@ -48,56 +49,56 @@ static int device_close(struct inode *inode, struct file *file) {
 }
 
 // Device write function
-static ssize_t device_write(struct file *file, const char __user *user_buffer, size_t size, loff_t *offset) {
+static ssize_t device_write(struct file *file, const char __user *user_buffer, size_t size, loff_t *offset) 
+{
     char user_message[BUFFER_SIZE];
     char timestamped_message[BUFFER_SIZE];
-    struct timespec64 ts;
     char timestamp[64];
+    struct timespec64 ts;
+    struct tm tm;
 
-    // Get the current timestamp
-    ktime_get_real_ts64(&ts);
-    snprintf(timestamp, sizeof(timestamp), "%04lld-%02lld-%02lld %02lld:%02lld:%02lld",
-             (1900 + ts.tv_sec / 31556926), // Year approximation
-             ((ts.tv_sec / 2629743) % 12 + 1), // Month
-             ((ts.tv_sec / 86400) % 30 + 1), // Day
-             (ts.tv_sec / 3600) % 24,       // Hour
-             (ts.tv_sec / 60) % 60,         // Minute
-             ts.tv_sec % 60);              // Second
-
+    ktime_get_real_ts64(&ts);                // Get current real-time
+    time64_to_tm(ts.tv_sec, 0, &tm);         // Convert to broken-down time
+    snprintf(timestamp,sizeof(timestamp), "date:%02d:%02d:%04ld time:%02d:%02d",tm.tm_mday,tm.tm_mon + 1, tm.tm_year + 1900, tm.tm_hour, tm.tm_min);
+	pr_info("the time stamp is %s:\n",timestamp);
     // Copy message from user space
     if (copy_from_user(user_message, user_buffer, size)) {
         return -EFAULT;
     }
     user_message[size] = '\0'; // Null-terminate the user message
-
     // Combine timestamp with the user message
     snprintf(timestamped_message, sizeof(timestamped_message), "[%s] %s", timestamp, user_message);
-
     // Store the message in the circular buffer
     snprintf(log_buffer[write_index].log_message, BUFFER_SIZE, "%s", timestamped_message);
     write_index = (write_index + 1) % MAX_LOGS;
-
-    printk(KERN_INFO "logger_device: Log stored: %s\n", timestamped_message);
     return size;
 }
 
 // Device read function
 static ssize_t device_read(struct file *file, char __user *user_buffer, size_t size, loff_t *offset) {
     size_t log_len;
-    if (read_index == write_index) {
-        printk(KERN_INFO "logger_device: No logs to read\n");
+	char temp[256];
+    if (read_index == write_index)
+   	{
+    	strcpy(temp,"no log message is to read from the buffer ie the buffer is empty");
+		if (copy_to_user(user_buffer, log_buffer[read_index].log_message, log_len)) 
+		{
+        	return -EFAULT;
+    	}
         return 0; // No logs available
     }
-
-    // Get the next log from the circular buffer
-    log_len = strlen(log_buffer[read_index].log_message);
-    if (copy_to_user(user_buffer, log_buffer[read_index].log_message, log_len)) {
-        return -EFAULT;
-    }
-    read_index = (read_index + 1) % MAX_LOGS;
-
-    printk(KERN_INFO "logger_device: Log read\n");
-    return log_len;
+	else if(read_index<=MAX_LOGS)
+	{
+    	// Get the next log from the circular buffer
+	    log_len = strlen(log_buffer[read_index].log_message);
+   		 if (copy_to_user(user_buffer, log_buffer[read_index].log_message, log_len)) 
+		 {
+       		 return -EFAULT;
+    	 }	
+	}
+	read_index = (read_index + 1) % MAX_LOGS;
+	printk(KERN_INFO "logger_device: Log read\n");
+   	return log_len;
 }
 
 // Module initialization
@@ -123,4 +124,5 @@ module_exit(logger_device_exit);
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Your Name");
 MODULE_DESCRIPTION("Logger Device Driver with Timestamped Messages");
+
 
