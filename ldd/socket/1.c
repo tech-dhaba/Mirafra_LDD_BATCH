@@ -24,7 +24,7 @@ int main() {
     ser_addr.sin_port = htons(port);
 
     // Convert IP address from text to binary
-    if (inet_pton(AF_INET, "127.0.0.1", &ser_addr.sin_addr) <= 0) {
+    if (inet_pton(AF_INET, "192.168.0.205", &ser_addr.sin_addr) <= 0) {
         perror("Failed to convert IP address\n");
         close(sock);
         exit(EXIT_FAILURE);

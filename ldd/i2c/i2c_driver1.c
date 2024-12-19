@@ -11,7 +11,7 @@ struct rpi4b_i2c_dev {
     struct i2c_client *client;
 };
 
-static void probe(struct i2c_client *client, const struct i2c_device_id *id)
+static int rpi4b_i2c_probe(struct i2c_client *client)
 {
     struct rpi4b_i2c_dev *dev;
     int ret;
@@ -24,7 +24,7 @@ static void probe(struct i2c_client *client, const struct i2c_device_id *id)
     dev = devm_kzalloc(&client->dev, sizeof(struct rpi4b_i2c_dev), GFP_KERNEL);
     if (!dev) {
         dev_err(&client->dev, "Failed to allocate memory\n");
-      //  return -ENOMEM;
+        return -ENOMEM;
     }
     i2c_set_clientdata(client, dev);
     dev->client = client;
@@ -33,18 +33,18 @@ static void probe(struct i2c_client *client, const struct i2c_device_id *id)
     ret = i2c_smbus_read_byte_data(client, reg_addr);
     if (ret < 0) {
         dev_err(&client->dev, "Failed to read data: %d\n", ret);
-    //    return ret;
+        return ret;
     }
     data = ret;
     dev_info(&client->dev, "Read data: 0x%02x from reg 0x%02x\n", data, reg_addr);
 
-  //  return 0;
+    return 0;
 }
 
-static int remove(struct i2c_client *client)
+static void rpi4b_i2c_remove(struct i2c_client *client)
 {
     dev_info(&client->dev, "Removing I2C device\n");
-//    return 0;  // Ensure this returns an int
+    //return 0;
 }
 
 /* I2C Device ID Table */
@@ -59,8 +59,8 @@ static struct i2c_driver rpi4b_i2c_driver = {
     .driver = {
         .name = DRIVER_NAME,
     },
-    .probe = probe,
-    .remove = remove,
+    .probe = rpi4b_i2c_probe,
+    .remove = rpi4b_i2c_remove,
     .id_table = rpi4b_i2c_id,
 };
 
@@ -79,8 +79,7 @@ static void __exit rpi4b_i2c_exit(void)
 module_init(rpi4b_i2c_init);
 module_exit(rpi4b_i2c_exit);
 
-MODULE_AUTHOR("Yaswanth Reddy");
+MODULE_AUTHOR("Yaswanth Kumar");
 MODULE_DESCRIPTION("I2C Device Driver for Raspberry Pi 4B");
 MODULE_LICENSE("GPL");
 MODULE_VERSION("1.0");
-

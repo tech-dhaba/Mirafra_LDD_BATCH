@@ -1,0 +1,1 @@
+savedcmd_/home/tyr/ldd/spi/spi_driver.ko := ld -r -m elf_x86_64 -z noexecstack --build-id=sha1  -T scripts/module.lds -o /home/tyr/ldd/spi/spi_driver.ko /home/tyr/ldd/spi/spi_driver.o /home/tyr/ldd/spi/spi_driver.mod.o

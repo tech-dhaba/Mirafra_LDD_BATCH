@@ -1,3 +1,5 @@
+#ifndef LOGGER_H
+#define LOGGER_H
 #include <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/fs.h>
@@ -143,4 +145,4 @@ module_exit(logger_driver_exit);
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Yaswanth reddy");
 MODULE_DESCRIPTION("Logger Device Driver with Circular Buffer");
-
+#endif // ending the logger

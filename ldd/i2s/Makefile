@@ -1,4 +1,4 @@
-obj-m+= vnet5.o
+obj-m+= i2s.o
 all:
 	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
 clean:
